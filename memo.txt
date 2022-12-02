@@ -1,0 +1,73 @@
+Building a Hypermedia-Driven RESTful Web Service
+    This guide walks you through the process of creating a “Hello, World” Hypermedia-driven REST web service with Spring.
+    Hypermedia is an important aspect of REST.
+    *Hypermedia as the Engine of Application State (HATEOAS)
+    It lets you build services that decouple client and server to a large extent and let them evolve independently.
+    The representations returned for REST resources contain not only data but also links to related resources.
+    Thus, the design of the representations is crucial to the design of the overall service.
+
+What You Will Build
+    You will build a hypermedia-driven REST service with Spring HATEOAS: a library of APIs that you can use to create links that point to Spring MVC controllers, build up resource representations, and control how they are rendered into supported hypermedia formats (such as HAL).
+
+    The service will accept HTTP GET requests at http://localhost:8080/greeting.
+
+    It will respond with a JSON representation of a greeting that is enriched with the simplest possible hypermedia element, a link that points to the resource itself. The following listing shows the output:
+    {
+         "content":"Hello, World!",
+         "_links":{
+            "self":{
+            "href":"http://localhost:8080/greeting?name=World"
+             }
+         }
+    }
+    The response already indicates that you can customize the greeting with an optional name parameter in the query string, as the following listing shows:
+        http://localhost:8080/greeting?name=User
+    The name parameter value overrides the default value of World and is reflected in the response, as the following listing shows:
+    {
+      "content":"Hello, User!",
+         "_links":{
+             "self":{
+              "href":"http://localhost:8080/greeting?name=User"
+              }
+        }
+    }
+
+Github:
+https://github.com/spring-guides/gs-rest-hateoas.git
+
+Initial dependency:
+Spring HATEOAS
+
+1) Adding a JSON Library
+   Because you will use JSON to send and receive information, you need a JSON library. In this guide, you will use the Jayway JsonPath library.
+
+   To include the library in a Maven build, add the following dependency to your pom.xml file:
+
+   The following listing shows the finished pom.xml file:
+
+   To include the libary in a Gradle build, add the following dependency to your build.gradle file:
+       testCompile 'com.jayway.jsonpath:json-path'
+   The following listing shows the finished build.gradle file:
+   plugins {
+   	id 'org.springframework.boot' version '2.6.3'
+   	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+   	id 'java'
+   }
+
+   group = 'com.example'
+   version = '0.0.1-SNAPSHOT'
+   sourceCompatibility = '1.8'
+
+   repositories {
+   	mavenCentral()
+   }
+
+   dependencies {
+   	implementation 'org.springframework.boot:spring-boot-starter-hateoas'
+   	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+   }
+
+   test {
+   	useJUnitPlatform()
+   }
+
