@@ -130,3 +130,7 @@ Spring HATEOAS
 
    The main() method uses Spring Boot’s SpringApplication.run() method to launch an application. Did you notice that there was not a single line of XML? There is no web.xml file, either. This web application is 100% pure Java and you did not have to deal with configuring any plumbing or infrastructure.
 
+4) Build an executable JAR
+   You can run the application
+   Logging output is displayed. The service should be up and running within a few seconds.
+
