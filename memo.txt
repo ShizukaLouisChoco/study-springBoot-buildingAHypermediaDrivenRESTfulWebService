@@ -102,3 +102,31 @@ Spring HATEOAS
 
    Next, create the resource controller that will serve these greetings.
 
+3) Create a REST Controller
+   In Spring’s approach to building RESTful web services, HTTP requests are handled by a controller.
+   The components are identified by the @RestController annotation, which combines the @Controller and @ResponseBody annotations.
+   The following GreetingController (from src/main/java/com/example/resthateoas/GreetingController.java) handles GET requests for /greeting by returning a new instance of the Greeting class:
+
+   This controller is concise and simple, but there is plenty going on. We break it down step by step.
+
+   The @RequestMapping annotation ensures that HTTP requests to /greeting are mapped to the greeting() method.
+
+   The above example does not specify GET vs. PUT, POST, and so forth, because @RequestMapping maps all HTTP operations by default. Use @GetMapping("/greeting") to narrow this mapping. In that case you also want to import org.springframework.web.bind.annotation.GetMapping;.
+   @RequestParam binds the value of the query string parameter name into the name parameter of the greeting() method.
+   This query string parameter is implicitly not required because of the use of the defaultValue attribute. If it is absent in the request, the defaultValue of World is used.
+
+   Because the @RestController annotation is present on the class, an implicit @ResponseBody annotation is added to the greeting method.
+   This causes Spring MVC to render the returned HttpEntity and its payload (the Greeting) directly to the response.
+
+   The most interesting part of the method implementation is how you create the link that points to the controller method and how you add it to the representation model. Both linkTo(…) and methodOn(…) are static methods on ControllerLinkBuilder that let you fake a method invocation on the controller. The returned LinkBuilder will have inspected the controller method’s mapping annotation to build up exactly the URI to which the method is mapped.
+
+   Spring HATEOAS respects various X-FORWARDED- headers. If you put a Spring HATEOAS service behind a proxy and properly configure it with X-FORWARDED-HOST headers, the resulting links will be properly formatted.
+   The call to withSelfRel() creates a Link instance that you add to the Greeting representation model.
+
+   @SpringBootApplication is a convenience annotation that adds all of the following:
+   @Configuration: Tags the class as a source of bean definitions for the application context.
+   @EnableAutoConfiguration: Tells Spring Boot to start adding beans based on classpath settings, other beans, and various property settings. For example, if spring-webmvc is on the classpath, this annotation flags the application as a web application and activates key behaviors, such as setting up a DispatcherServlet.
+   @ComponentScan: Tells Spring to look for other components, configurations, and services in the com/example package, letting it find the controllers.
+
+   The main() method uses Spring Boot’s SpringApplication.run() method to launch an application. Did you notice that there was not a single line of XML? There is no web.xml file, either. This web application is 100% pure Java and you did not have to deal with configuring any plumbing or infrastructure.
+
