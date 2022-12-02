@@ -159,3 +159,5 @@ Spring HATEOAS
    This change demonstrates that the @RequestParam arrangement in GreetingController works as expected.
    The name parameter has been given a default value of World but can always be explicitly overridden through the query string.
 
+6) Summary
+   Congratulations! You have just developed a hypermedia-driven RESTful web service with Spring HATEOAS.
