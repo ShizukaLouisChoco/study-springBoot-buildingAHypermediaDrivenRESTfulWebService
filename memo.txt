@@ -165,3 +165,5 @@ Spring HATEOAS
 7) ERROR halLinkDisvoverer
 
     org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'halLinkDisocoverer' defined in class path resource [org/springframework/hateoas/mediatype/hal/HalMediaTypeConfiguration.class]: Failed to instantiate [org.springframework.hateoas.client.LinkDiscoverer]: Factory method 'halLinkDisocoverer' threw exception with message: com/jayway/jsonpath/PathNotFoundException
+
+8) Add missing classes
